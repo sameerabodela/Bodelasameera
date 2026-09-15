@@ -1,0 +1,36 @@
+import java.util.*;
+public class Main {
+static long[] memo = new long[1000001];
+static {
+memo[1] = 1;
+    }
+static long cycleLength(long n) {
+if (n <= 1000000 && memo[(int) n] != 0) {
+return memo[(int) n];
+}
+long next;
+if (n % 2 == 0) {
+ next = n / 2;
+} else {
+next = 3 * n + 1;
+}
+long length = 1 + cycleLength(next);
+if (n <= 1000000) {
+memo[(int) n] = length;
+}
+return length;
+}
+public static void main(String[] args) {
+Scanner sc = new Scanner(System.in);
+int originalI = sc.nextInt();
+int originalJ = sc.nextInt();
+int start = Math.min(originalI, originalJ);
+int end = Math.max(originalI, originalJ);
+long maxCycle = 0;
+for (int i = start; i <= end; i++) {
+maxCycle = Math.max(maxCycle, cycleLength(i));
+        }
+System.out.println(originalI + " " + originalJ + " " + maxCycle);
+sc.close();
+    }
+}
