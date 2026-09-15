@@ -1,0 +1,27 @@
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        double x = sc.nextDouble();
+        double y = sc.nextDouble();
+        if (y == 0) {
+            System.out.println("Division by zero");
+            return;
+        }
+        double low = 0;
+        double high = x;
+        double mid = 0;
+        while (high - low > 0.000001) {
+            mid = (low + high) / 2;
+            if (y * mid < x)
+                low = mid;
+            else
+                high = mid;
+        }
+        long ans= Math.round(mid);
+        if (Math.abs(mid - ans) < 0.00001)
+            System.out.println(ans);
+        else
+            System.out.println(mid);
+    }
+}
