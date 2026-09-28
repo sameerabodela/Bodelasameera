@@ -1,0 +1,23 @@
+#include <stdio.h>
+#include <string.h>
+int main() {
+char s[100005], p[100005];
+scanf("%s%s", s, p);
+int i = 0, j = 0, star = -1, k = 0;
+while (s[i]) {
+if (p[j] == s[i] || p[j] == '?')
+i++, j++;
+else if (p[j] == '*')
+star = j++, k = i;
+else if (star != -1)
+j = star + 1, i = ++k;
+else {
+printf("0");
+ return 0;
+}
+}
+while (p[j] == '*')
+j++;
+printf("%d", p[j] == '\0');
+return 0;
+}
