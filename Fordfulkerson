@@ -1,0 +1,37 @@
+#include <stdio.h>
+int n, cap[100][100], q[100], p[100], vis[100];
+int bfs() {
+    int f=0,r=0;
+    for(int i=0;i<n;i++) vis[i]=0;
+    q[r++]=0;
+    vis[0]=1;
+    while(f<r) {
+        int u=q[f++];
+        for(int v=0;v<n;v++)
+            if(!vis[v] && cap[u][v]>0)
+                vis[v]=1, p[v]=u, q[r++]=v;
+    }
+    return vis[n-1];
+}
+int main() {
+    int e;
+    scanf("%d%d",&n,&e);
+    while(e--) {
+        int u,v,c;
+        scanf("%d%d%d",&u,&v,&c);
+        cap[u][v]+=c;
+    }
+    int ans=0;
+    while(bfs()) {
+        int f=1000000000;
+        for(int v=n-1;v;v=p[v])
+            if(cap[p[v]][v]<f) f=cap[p[v]][v];
+        for(int v=n-1;v;v=p[v]) {
+            int u=p[v];
+            cap[u][v]-=f;
+            cap[v][u]+=f;
+        }
+        ans+=f;
+    }
+    printf("%d",ans);
+}
