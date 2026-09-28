@@ -1,0 +1,32 @@
+#include <stdio.h>
+int main() {
+    int n,m;
+    scanf("%d%d",&n,&m);
+    int a[n][m],q[n*m][2],f=0,r=0,c=0,t=0;
+    for(int i=0;i<n;i++)
+        for(int j=0;j<m;j++) {
+            scanf("%d",&a[i][j]);
+            if(a[i][j]==2) q[r][0]=i,q[r++][1]=j;
+            if(a[i][j]==1) c++;
+        }
+    int dx[]={-1,1,0,0},dy[]={0,0,-1,1};
+    while(f<r) {
+        int z=r-f, changed=0;
+        while(z--) {
+            int x=q[f][0],y=q[f++][1];
+            for(int k=0;k<4;k++) {
+                int X=x+dx[k],Y=y+dy[k];
+                if(X>=0&&X<n&&Y>=0&&Y<m&&a[X][Y]==1) {
+                    a[X][Y]=2;
+                    c--;
+                    q[r][0]=X;
+                    q[r++][1]=Y;
+                    changed=1;
+                }
+            }
+        }
+        if(changed) t++;
+    }
+    printf("%d",c?-1:t);
+    return 0;
+}
